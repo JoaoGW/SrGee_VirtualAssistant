@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+DK+Loopet:wght@100..400&display=swap');
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-specials-titles: "Playwrite DK Loopet", serif; /* Atualizado */
+  --font-poppins: "Poppins", sans-serif;
+  --font-kanit: "Kanit", sans-serif;
 }
 
 @theme inline {
@@ -22,5 +26,14 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-poppins);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-kanit); /* Fonte para títulos */
+}
+
+.special-title {
+  font-family: var(--font-specials-titles); /* Fonte especial para títulos */
+  font-weight: 500;
 }
