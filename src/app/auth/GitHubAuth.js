@@ -14,6 +14,7 @@ signInWithPopup(auth, provider)
 
     const user = result.user;
     console.log("Usuário logado:", user);
+    redirect('/dashboard');
   })
   .catch((error) => {
     console.error("Erro ao fazer login:", error);

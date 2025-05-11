@@ -1,7 +1,8 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "@utils/Firebase/firebase";
+import { GithubAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '@utils/Firebase/firebase';
 
 import SrGee from '@assets/srgee.png';
 
@@ -13,15 +14,25 @@ type LoginModalProps = {
 };
 
 export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
+  const router = useRouter();
+
   const handleGitHubLogin = async () => {
     const provider = new GithubAuthProvider();
 
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      console.log("Usuário logado:", user);
+
+      const token = await user.getIdToken();
+
+      document.cookie = `authToken=${token}; path=/; secure; HttpOnly`;
+
+      console.log('Usuário logado:', user);
+
+      router.push('/dashboard');
+      setIsOpen(false);
     } catch (error) {
-      console.error("Erro ao fazer login:", error);
+      console.error('Erro ao fazer login:', error);
     }
   };
 
