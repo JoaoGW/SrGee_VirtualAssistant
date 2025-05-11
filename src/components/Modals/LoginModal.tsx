@@ -1,4 +1,5 @@
-import { signInWithPopup, GithubAuthProvider, getAuth } from "firebase/auth";
+import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "@utils/Firebase/firebase"; // Certifique-se de que o caminho está correto
 import { X } from "lucide-react";
 
 type LoginModalProps = {
@@ -9,7 +10,6 @@ type LoginModalProps = {
 export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
   const handleGitHubLogin = async () => {
     const provider = new GithubAuthProvider();
-    const auth = getAuth();
 
     try {
       const result = await signInWithPopup(auth, provider);
