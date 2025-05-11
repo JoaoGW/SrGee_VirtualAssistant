@@ -39,7 +39,10 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
 
         <div className='flex flex-row justify-center items-center'>
           <Image className='rounded-full p-3 bg-[#101828] my-10' src={SrGee} height={150} width={150} alt='Sir Gee, your personal assistant'></Image>
-          <p className='special-title text-black text-4xl ml-10'>Sr Gee</p>
+          <div>
+            <p className='special-title text-black text-4xl ml-10'>Sr Gee</p>
+            <p className='ml-5 mt-2 text-black'>Your Git AI Assistant</p>
+          </div>
         </div>
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
           Login with GitHub
