@@ -1,5 +1,10 @@
+import Image from 'next/image';
+
 import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "@utils/Firebase/firebase"; // Certifique-se de que o caminho está correto
+import { auth } from "@utils/Firebase/firebase";
+
+import SrGee from '@assets/srgee.png';
+
 import { X } from "lucide-react";
 
 type LoginModalProps = {
@@ -32,6 +37,10 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
           <X className="h-6 w-6" />
         </button>
 
+        <div className='flex flex-row justify-center items-center'>
+          <Image className='rounded-full p-3 bg-[#101828] my-10' src={SrGee} height={150} width={150} alt='Sir Gee, your personal assistant'></Image>
+          <p className='special-title text-black text-4xl ml-10'>Sr Gee</p>
+        </div>
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
           Login with GitHub
         </h2>

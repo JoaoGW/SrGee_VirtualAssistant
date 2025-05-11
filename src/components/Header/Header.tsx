@@ -12,7 +12,6 @@ export function Header() {
           <Star />
           <a className="ml-3">Star us on GitHub!</a>
         </div>
-        <button>Sign Up</button>
         <ButtonWithStartIcon text="Login" icon={ LockKeyhole } isLogin/>
       </div>
     </div>
