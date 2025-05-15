@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { getCookie } from '../cookies/cookiesConfig';
 
 import { SideBar } from '@components/SideBar/SideBar';
+import { ForbiddenAcessPageStructure } from '@components/Forbidden/Forbidden';
 
 export default async function Dashboard() {
   // Obtenha o token dos cookies
@@ -13,8 +14,15 @@ export default async function Dashboard() {
   });
 
   return (
-    <div>
-      <SideBar />
-    </div>
+    <>
+      {
+        token
+          ?
+          <div>
+            <SideBar />
+          </div>
+          : <ForbiddenAcessPageStructure />
+      }
+    </>
   );
 }

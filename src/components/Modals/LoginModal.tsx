@@ -25,7 +25,7 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
 
       const token = await user.getIdToken();
 
-      document.cookie = `authToken=${token}; path=/; secure; HttpOnly`;
+      document.cookie = `authToken=${token}; path=/; secure;`;
 
       console.log('Usuário logado:', user);
 
