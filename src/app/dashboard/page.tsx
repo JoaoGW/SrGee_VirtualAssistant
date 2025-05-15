@@ -1,7 +1,8 @@
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 
 import { getCookie } from '../cookies/cookiesConfig';
+
+import { SideBar } from '@components/SideBar/SideBar';
 
 export default async function Dashboard() {
   // Obtenha o token dos cookies
@@ -13,7 +14,7 @@ export default async function Dashboard() {
 
   return (
     <div>
-      <h1>Bem-vindo ao Dashboard</h1>
+      <SideBar />
     </div>
   );
 }

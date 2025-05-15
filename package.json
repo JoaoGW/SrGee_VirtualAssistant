@@ -17,6 +17,7 @@
     "react-dom": "^19.0.0",
     "react-simple-typewriter": "^5.0.1",
     "react-spinners": "^0.17.0",
+    "react-tooltip": "^5.28.1",
     "turbo": "^2.5.3"
   },
   "devDependencies": {
