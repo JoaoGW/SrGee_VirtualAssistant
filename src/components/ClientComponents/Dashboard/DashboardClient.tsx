@@ -69,19 +69,19 @@ export function DashboardClient() {
               icon={PenLine}
               text="Edit Profile"
               isLogin={false}
-              style={{ width: '125%', backgroundColor: '#3b82f6', color: '#fff' }}
+              style={{ width: '100%', backgroundColor: '#3b82f6', color: '#fff' }}
             />
             <ButtonWithStartIcon
               icon={CircleFadingArrowUp}
               text="Upgrade Plan"
               isLogin={false}
-              style={{ width: '125%', backgroundColor: '#f59e42', color: '#fff' }}
+              style={{ width: '100%', backgroundColor: '#f59e42', color: '#fff' }}
             />
             <ButtonWithStartIcon
               icon={RefreshCcw}
               text="Refresh Statistics"
               isLogin={false}
-              style={{ width: '125%', backgroundColor: '#10b981', color: '#fff' }}
+              style={{ width: '100%', backgroundColor: '#10b981', color: '#fff' }}
             />
             <div className="mt-5">
               <SliderFilter isLoading={isLoading} user={user} setUser={setUser} />
