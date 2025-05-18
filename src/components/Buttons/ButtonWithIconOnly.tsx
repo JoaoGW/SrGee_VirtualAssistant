@@ -9,10 +9,11 @@ type ButtonProps = {
   iconColor?: string,
   description: string,
   style?: Object,
+  disabled?: boolean,
   buttonAction: () => void
 }
 
-export function ButtonWithIconOnly({ icon: Icon, iconColor, description, style, buttonAction }: ButtonProps) {
+export function ButtonWithIconOnly({ icon: Icon, iconColor, description, disabled, style, buttonAction }: ButtonProps) {
   return (
     <>
       <button
@@ -22,6 +23,7 @@ export function ButtonWithIconOnly({ icon: Icon, iconColor, description, style, 
         data-tooltip-place="right"
         style={ style }
         onClick={ buttonAction }
+        disabled={ disabled }
       >
         <Icon color={ iconColor } size={40} />
       </button>

@@ -2,11 +2,11 @@ import { cookies } from 'next/headers';
 
 import { getCookie } from '../cookies/cookiesConfig';
 
-import { SideBar } from '@components/SideBar/SideBar';
 import { ForbiddenAcessPageStructure } from '@components/Forbidden/Forbidden';
+import { DashboardClient } from '@components/ClientComponents/Dashboard/DashboardClient';
 
 export default async function Dashboard() {
-  // Obtenha o token dos cookies
+  // Obtendo o token dos cookies
   const cookieStorage = cookies();
   const token = await getCookie({
     cookieStorage,
@@ -17,10 +17,7 @@ export default async function Dashboard() {
     <>
       {
         token
-          ?
-          <div>
-            <SideBar />
-          </div>
+          ? <DashboardClient />
           : <ForbiddenAcessPageStructure />
       }
     </>
