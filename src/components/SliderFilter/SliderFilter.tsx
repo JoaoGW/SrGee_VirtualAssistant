@@ -31,7 +31,7 @@ export function SliderFilter({ isLoading, user, setUser }: SliderFilterProps) {
         <button
           className={`flex-1 h-full z-20 rounded-l-xl font-semibold transition-colors duration-300 ${user?.dataRange === '30d'
             ? 'text-gray-900'
-            : 'text-gray-300 hover:text-white'
+            : 'text-gray-500 hover:text-black'
             } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={isLoading}
           onClick={() => setUser((prev: any) => ({ ...prev, dataRange: '30d' }))}

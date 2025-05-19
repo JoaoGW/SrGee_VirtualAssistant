@@ -3,6 +3,10 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 import CountUp from 'react-countup';
+import { Doughnut } from 'react-chartjs-2';
+import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+
+import { Crown, PenLine, CircleFadingArrowUp, RefreshCcw, FolderGit, GitPullRequest, Star } from 'lucide-react';
 
 import { auth } from '@utils/Firebase/firebase';
 
@@ -10,16 +14,38 @@ import { PatternAuthPages } from '@components/PatternAuthPages/PatternAuthPages'
 import { OnlineBadge } from '@components/Badges/OnlineBadge';
 import { RotateLoadingSpinner } from '@components/LoadingSpinners/Loading';
 import { ButtonWithStartIcon } from '@components/Buttons/ButtonWithStartIcon';
-
-import DefaultProfile from '@assets/Logo/WB_description.png'
-
-import { Crown, PenLine, CircleFadingArrowUp, RefreshCcw } from 'lucide-react';
 import { SliderFilter } from '@components/SliderFilter/SliderFilter';
+import { ActivityCard } from '@components/ActivityCard/ActivityCard';
+
+import DefaultProfile from '@assets/Logo/WB_description.png';
+
+Chart.register(ArcElement, Tooltip, Legend);
 
 export function DashboardClient() {
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>('');
+
+  const data = {
+    labels: ['TypeScript', 'HTML', 'CSS', 'JavaScript', 'Java'],
+    datasets: [
+      {
+        data: [47.32, 24.31, 12.31, 10.18, 5.87],
+        backgroundColor: ['#007ACC', '#E34C26', '#264DE4', '#F7DF1E', '#B07219'],
+        hoverBackgroundColor: ['#005A9C', '#C4411C', '#1E3A8A', '#EAD41C', '#8A4C1A'],
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
 
   useEffect(() => {
     const getCurrentUser = () => {
@@ -38,7 +64,7 @@ export function DashboardClient() {
       } finally {
         setIsLoading(false);
       }
-    }
+    };
 
     getCurrentUser();
   }, []);
@@ -118,28 +144,76 @@ export function DashboardClient() {
             <CountUp end={999} duration={10} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
         </div>
-        <div className='flex flex-row mt-5 gap-5'>
-          <section className='w-[25%] h-90 bg-gray-600 p-5 rounded-lg'>
-            <h4 className='text-xl'>Last Repositories</h4>
+        <div className="flex flex-row mt-5 gap-5">
+          <section className="w-[25%] h-90 bg-gray-600 p-5 rounded-lg">
+            <h4 className="text-xl">Last Repositories</h4>
+            <div className="flex flex-col gap-1.5 mt-5">
+              <ActivityCard icon={FolderGit} description="Repo test" />
+              <ActivityCard icon={FolderGit} description="Repo test" />
+              <ActivityCard icon={FolderGit} description="Repo test" />
+              <ActivityCard icon={FolderGit} description="Repo test" />
+              <ActivityCard icon={FolderGit} description="Repo test" />
+              <ActivityCard icon={FolderGit} description="Repo test" />
+            </div>
           </section>
-          <section className='w-[25%] bg-gray-600 p-5 rounded-lg'>
-            <h4 className='text-xl'>Languages Statistics</h4>
+          <section className="w-[25%] bg-gray-600 p-5 rounded-lg flex flex-col">
+            <h4 className="text-xl mb-4">Languages Statistics</h4>
+            <div className="flex flex-row items-center gap-3">
+              <div style={{ height: '275px', width: '60%' }}>
+                <Doughnut data={data} options={options} style={{ marginTop: 25 }}/>
+              </div>
+              <div className="flex flex-col gap-2 w-[40%]">
+                { data.labels.map((label, idx) => (
+                  <div key={label} className="flex items-center gap-2">
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        width: 16,
+                        height: 16,
+                        borderRadius: 4,
+                        backgroundColor: data.datasets[0].backgroundColor[idx],
+                      }}
+                    />
+                    <span className="text-white text-sm">{label}</span>
+                    <span className="ml-auto text-gray-300 text-xs font-semibold">
+                      {data.datasets[0].data[idx]}%
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </section>
-          <section className='w-[25%] bg-gray-600 p-5 rounded-lg'>
-            <h4 className='text-xl'>Last Pull Requests</h4>
+          <section className="w-[25%] bg-gray-600 p-5 rounded-lg">
+            <h4 className="text-xl">Last Pull Requests</h4>
+            <div className="flex flex-col gap-1.5 mt-5">
+              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
+              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
+              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
+              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
+              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
+              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
+            </div>
           </section>
-          <section className='w-[25%] bg-gray-600 p-5 rounded-lg'>
-            <h4 className='text-xl'>Stared Repositories</h4>
+          <section className="w-[25%] bg-gray-600 p-5 rounded-lg">
+            <h4 className="text-xl">Stared Repositories</h4>
+            <div className="flex flex-col gap-1.5 mt-5">
+              <ActivityCard icon={Star} description="Stared Repository test" />
+              <ActivityCard icon={Star} description="Stared Repository test" />
+              <ActivityCard icon={Star} description="Stared Repository test" />
+              <ActivityCard icon={Star} description="Stared Repository test" />
+              <ActivityCard icon={Star} description="Stared Repository test" />
+              <ActivityCard icon={Star} description="Stared Repository test" />
+            </div>
           </section>
         </div>
       </PatternAuthPages>
     );
   } else {
     return (
-      <section className='flex flex-col items-center justify-center h-screen'>
+      <section className="flex flex-col items-center justify-center h-screen">
         <RotateLoadingSpinner />
-        <p className='mt-10'>Carregando uma experiência única para você...</p>
+        <p className="mt-10">Carregando uma experiência única para você...</p>
       </section>
-    )
+    );
   }
 }
