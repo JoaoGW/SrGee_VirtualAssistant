@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '@utils/Firebase/firebase';
 
-import SrGee from '@assets/srgee.png';
+import SrGee from '@assets/Logo/srgee.png';
 
 import { X } from "lucide-react";
 
@@ -25,7 +25,7 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
 
       const token = await user.getIdToken();
 
-      document.cookie = `authToken=${token}; path=/; secure; HttpOnly`;
+      document.cookie = `authToken=${token}; path=/; secure;`;
 
       console.log('Usuário logado:', user);
 
