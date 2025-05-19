@@ -59,7 +59,11 @@ export function DashboardClient() {
           setErrorMsg('Ocorreu um problema ao obter informações do seu usuário');
         }
       } catch (error) {
-        setErrorMsg(error as string);
+        if (error instanceof Error) {
+          setErrorMsg(error.message);
+        } else {
+          setErrorMsg(String(error));
+        }
         setIsLoading(false);
       } finally {
         setIsLoading(false);
