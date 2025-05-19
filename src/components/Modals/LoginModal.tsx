@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '@utils/Firebase/firebase';
 
-import SrGee from '@assets/Logo/srgee.png';
+import SrGee from "@assets/Logo/BW_nodescription.png"
 
 import { X } from "lucide-react";
 
@@ -40,7 +40,7 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#000000d1] bg-opacity-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 relative">
         <button
           onClick={() => setIsOpen(false)}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 hover:cursor-pointer"
@@ -49,10 +49,10 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
         </button>
 
         <div className='flex flex-row justify-center items-center'>
-          <Image className='rounded-full p-3 bg-[#101828] my-10' src={SrGee} height={150} width={150} alt='Sir Gee, your personal assistant'></Image>
+          <Image src={SrGee} height={250} width={250} alt='Sir Gee, your personal assistant'></Image>
           <div>
-            <p className='special-title text-black text-4xl ml-10'>Sr Gee</p>
-            <p className='ml-5 mt-2 text-black'>Your Git AI Assistant</p>
+            <p className='special-title text-black text-4xl'>Sr Gee</p>
+            <p className='mt-2 text-black'>Your Git AI Assistant</p>
           </div>
         </div>
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
