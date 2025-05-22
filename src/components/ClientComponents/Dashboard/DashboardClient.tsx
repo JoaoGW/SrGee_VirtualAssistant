@@ -1,12 +1,13 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import CountUp from 'react-countup';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
-import { Crown, PenLine, CircleFadingArrowUp, RefreshCcw, FolderGit, GitPullRequest, Star } from 'lucide-react';
+import { Crown, PenLine, CircleFadingArrowUp, RefreshCcw, FolderGit, GitPullRequest, Star, ArrowRight } from 'lucide-react';
 
 import { auth } from '@utils/Firebase/firebase';
 
@@ -150,7 +151,23 @@ export function DashboardClient() {
         </div>
         <div className="flex flex-row mt-5 gap-5">
           <section className="w-[25%] h-90 bg-gray-600 p-5 rounded-lg">
-            <h4 className="text-xl">Last Repositories</h4>
+            <div className='flex flex-row items-center justify-between'>
+              <h4 className="text-xl">Last Repositories</h4>
+                <Link href='/repositories'>
+                <span
+                  style={{
+                  background: '#e2e2e2',
+                  borderRadius: '50%',
+                  padding: 6,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  }}
+                >
+                  <ArrowRight className="text-gray-800" size={20} />
+                </span>
+                </Link>
+            </div>
             <div className="flex flex-col gap-1.5 mt-5">
               <ActivityCard icon={FolderGit} description="Repo test" />
               <ActivityCard icon={FolderGit} description="Repo test" />
@@ -188,7 +205,23 @@ export function DashboardClient() {
             </div>
           </section>
           <section className="w-[25%] bg-gray-600 p-5 rounded-lg">
-            <h4 className="text-xl">Last Pull Requests</h4>
+            <div className='flex flex-row items-center justify-between'>
+              <h4 className="text-xl">Last Pull Requests</h4>
+              <Link href='/pull-requests'>
+                <span
+                  style={{
+                  background: '#e2e2e2',
+                  borderRadius: '50%',
+                  padding: 6,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  }}
+                >
+                  <ArrowRight className="text-gray-800" size={20} />
+                </span>
+              </Link>
+            </div>
             <div className="flex flex-col gap-1.5 mt-5">
               <ActivityCard icon={GitPullRequest} description="Pull Request test" />
               <ActivityCard icon={GitPullRequest} description="Pull Request test" />
@@ -199,7 +232,23 @@ export function DashboardClient() {
             </div>
           </section>
           <section className="w-[25%] bg-gray-600 p-5 rounded-lg">
-            <h4 className="text-xl">Stared Repositories</h4>
+            <div className='flex flex-row items-center justify-between'>
+              <h4 className="text-xl">Stared Repositories</h4>
+              <Link href='/stared'>
+                <span
+                  style={{
+                  background: '#e2e2e2',
+                  borderRadius: '50%',
+                  padding: 6,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  }}
+                >
+                  <ArrowRight className="text-gray-800" size={20} />
+                </span>
+              </Link>
+            </div>
             <div className="flex flex-col gap-1.5 mt-5">
               <ActivityCard icon={Star} description="Stared Repository test" />
               <ActivityCard icon={Star} description="Stared Repository test" />
