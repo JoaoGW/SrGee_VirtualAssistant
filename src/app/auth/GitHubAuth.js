@@ -1,21 +1,33 @@
 import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../utils/Firebase/firebase";
 
-const provider = new GithubAuthProvider();
+import Cookies from "js-cookie";
 
-provider.setCustomParameters({
-  allow_signup: "false",
-});
+export async function signInWithGitHub() {
+  const provider = new GithubAuthProvider();
+  provider.addScope("repo");
+  provider.addScope("read:user");
 
-signInWithPopup(auth, provider)
-  .then((result) => {
-    const credential = GithubAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-
-    const user = result.user;
-    console.log("Usuário logado:", user);
-    redirect('/dashboard');
-  })
-  .catch((error) => {
-    console.error("Erro ao fazer login:", error);
+  provider.setCustomParameters({
+    allow_signup: "false",
   });
+
+  return signInWithPopup(auth, provider)
+    .then((result) => {
+      const credential = GithubAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+
+      if (token) {
+        Cookies.set("githubToken", token, { expires: 1 });
+        console.log("Saved token using cookies:", token);
+      } else {
+        console.error("No token received");
+      }
+
+      return result.user;
+    })
+    .catch((error) => {
+      console.error("Erro ao fazer login:", error);
+      throw error;
+    });
+}

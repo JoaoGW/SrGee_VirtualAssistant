@@ -7,13 +7,13 @@ type SliderFilterProps = {
 };
 
 export function SliderFilter({ isLoading, user, setUser }: SliderFilterProps) {
-  // Inicializa o filtro com o valor armazenado no localStorage ou "1y" como padrão
+  // Initializes the dataRange state from localStorage when the component mounts
   useEffect(() => {
     const savedFilter = localStorage.getItem('dataRange') || '1y';
     setUser((prev: any) => ({ ...prev, dataRange: savedFilter }));
   }, [setUser]);
 
-  // Atualiza o localStorage sempre que o filtro mudar
+  // Updates localStorage whenever the user dataRange changes
   useEffect(() => {
     if (user?.dataRange) {
       localStorage.setItem('dataRange', user.dataRange);

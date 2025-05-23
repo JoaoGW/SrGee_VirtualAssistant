@@ -1,11 +1,15 @@
 "use client"
 import Image from "next/image";
 
+import { auth } from '@utils/Firebase/firebase';
+
 import { ButtonWithIconOnly } from "@components/Buttons/ButtonWithIconOnly";
 
 import { FolderGit2, FileDigit, GitBranch, GitCompare, GitMerge, GitPullRequestCreate, Rocket, Power } from "lucide-react";
 
 import WBLogo from '@assets/Logo/WB_nodescription.png'
+import { signOut } from "firebase/auth";
+import { redirect } from "next/navigation";
 
 type SideBarDependencies = {
   isLoading: boolean
@@ -26,7 +30,7 @@ export function SideBar({ isLoading }: SideBarDependencies) {
       <ButtonWithIconOnly icon={ GitMerge } description="Git Merge" buttonAction={doNothingTemp} disabled={ isLoading } />
       <ButtonWithIconOnly icon={ GitPullRequestCreate } description="Create Pull Request" buttonAction={doNothingTemp} disabled={ isLoading } />
       <ButtonWithIconOnly icon={ Rocket } description="Set Releases" buttonAction={doNothingTemp} disabled={ isLoading } />
-      <ButtonWithIconOnly icon={ Power } iconColor="#e0766e" description="Quit" buttonAction={doNothingTemp} disabled={ isLoading } style={{ marginTop: 20 }}/>
+      <ButtonWithIconOnly icon={ Power } iconColor="#e0766e" description="Quit" buttonAction={ () => { signOut(auth); redirect('/') } } disabled={ isLoading } style={{ marginTop: 20 }}/>
     </div>
   )
 }

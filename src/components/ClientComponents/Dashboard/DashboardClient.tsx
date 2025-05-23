@@ -3,11 +3,14 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { Octokit } from 'octokit';
+import Cookies from "js-cookie";
+
 import CountUp from 'react-countup';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
-import { Crown, PenLine, CircleFadingArrowUp, RefreshCcw, FolderGit, GitPullRequest, Star, ArrowRight } from 'lucide-react';
+import { Crown, PenLine, CircleFadingArrowUp, RefreshCcw, FolderGit, GitPullRequest, Star, ArrowRight, CircleX } from 'lucide-react';
 
 import { auth } from '@utils/Firebase/firebase';
 
@@ -25,8 +28,12 @@ Chart.register(ArcElement, Tooltip, Legend);
 export function DashboardClient() {
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>('');
+  const [userData, setUserData] = useState<any>(null);
+  const [repositories, setRepositories] = useState<any[]>([]);
 
+  // Chart.js v2 data
   const data = {
     labels: ['TypeScript', 'HTML', 'CSS', 'JavaScript', 'Java'],
     datasets: [
@@ -38,6 +45,7 @@ export function DashboardClient() {
     ],
   };
 
+  // Chart.js v2 options
   const options = {
     responsive: true,
     maintainAspectRatio: true,
@@ -48,6 +56,7 @@ export function DashboardClient() {
     },
   };
 
+  // Taking current user information from logged in user via Firebase 
   useEffect(() => {
     const getCurrentUser = () => {
       try {
@@ -73,6 +82,50 @@ export function DashboardClient() {
 
     getCurrentUser();
   }, []);
+
+  // For user data fetching
+  useEffect(() => {
+    fetchGitHubUser();
+  }, [])
+
+  // Fetching repositories data from GitHub API
+  async function fetchGitHubUser() {
+    try {
+      const token = Cookies.get("githubToken");
+      console.log("Token recuperado:", token);
+      
+      if (!token) {
+        setErrorMsg("Token não encontrado. Faça login novamente.");
+        return;
+      }
+
+      const octokit = new Octokit({
+        auth: token,
+      });
+
+      const response = await octokit.request("GET /user", {
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      });
+
+      setUserData(response.data);
+      console.log("User data:", response.data);
+
+    } catch (error) {
+      console.error("Error fetching your user data:", error);
+      setErrorMsg("Error fetching informations from GitHub.");
+    }
+  }
+
+  if(isLoading){
+    return (
+      <section className="flex flex-col items-center justify-center h-screen">
+        <RotateLoadingSpinner />
+        <p className="mt-10">Estamos carregando suas informações...</p>
+      </section>
+    );
+  }
 
   if (user) {
     return (
@@ -169,12 +222,16 @@ export function DashboardClient() {
                 </Link>
             </div>
             <div className="flex flex-col gap-1.5 mt-5">
-              <ActivityCard icon={FolderGit} description="Repo test" />
-              <ActivityCard icon={FolderGit} description="Repo test" />
-              <ActivityCard icon={FolderGit} description="Repo test" />
-              <ActivityCard icon={FolderGit} description="Repo test" />
-              <ActivityCard icon={FolderGit} description="Repo test" />
-              <ActivityCard icon={FolderGit} description="Repo test" />
+              { repositories.length === 0 ? (
+                <div className="flex flex-col justify-center items-center mt-20">
+                  <CircleX color='white' size={40} />
+                  <span className="text-white mt-2">Oh No! No repositories were found</span>
+                </div>
+              ) : (
+                repositories.map((repositoriesData) => (
+                  <ActivityCard key={repositoriesData.id} icon={FolderGit} description={repositoriesData.name} />
+                ))
+              )}
             </div>
           </section>
           <section className="w-[25%] bg-gray-600 p-5 rounded-lg flex flex-col">
