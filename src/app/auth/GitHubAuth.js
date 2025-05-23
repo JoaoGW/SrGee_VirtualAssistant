@@ -19,7 +19,6 @@ export async function signInWithGitHub() {
 
       if (token) {
         Cookies.set("githubToken", token, { expires: 1 });
-        console.log("Saved token using cookies:", token);
       } else {
         console.error("No token received");
       }

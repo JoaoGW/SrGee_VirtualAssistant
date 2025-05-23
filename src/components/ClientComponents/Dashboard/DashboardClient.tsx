@@ -92,10 +92,9 @@ export function DashboardClient() {
   async function fetchGitHubUser() {
     try {
       const token = Cookies.get("githubToken");
-      console.log("Token recuperado:", token);
-      
+
       if (!token) {
-        setErrorMsg("Token não encontrado. Faça login novamente.");
+        setErrorMsg("Token not found. Please try logging in again.");
         return;
       }
 
@@ -143,9 +142,15 @@ export function DashboardClient() {
               <OnlineBadge />
               <h1 className="text-3xl font-bold">Welcome Back, {user?.displayName}</h1>
               <h2 className="text-xl">Account: {user?.email}</h2>
-              <h3 className="text-xl mt-7 flex flex-row">
-                Current Plan: <Crown style={{ marginLeft: 15, marginRight: 7 }} /> NOT IMPLEMENTED
-              </h3>
+                <h3 className="text-xl flex flex-row">
+                Developing from:{" "}
+                <span className="ml-2">
+                  { userData.location ? userData.location : "Localização não fornecida" }
+                </span>
+                </h3>
+              <h4 className="text-xl flex flex-row">
+                Current Plan: { userData.plan.name !== 'free' ? <Crown style={{ marginLeft: 15, marginRight: 7 }} /> : '' } <span className='uppercase ml-2'>{ userData.plan.name } </span>
+              </h4>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-3">
@@ -175,31 +180,31 @@ export function DashboardClient() {
         <div className="flex flex-row flex-wrap gap-3 mt-10 w-full justify-between">
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Total Commits</p>
-            <CountUp end={999} duration={10} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={999} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Total Stars</p>
-            <CountUp end={999} duration={10} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={999} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Total Pull Requests</p>
-            <CountUp end={999} duration={10} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={999} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Total Issues</p>
-            <CountUp end={999} duration={10} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={999} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Contributed to</p>
-            <CountUp end={999} duration={10} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={999} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Repositories Owned</p>
-            <CountUp end={999} duration={10} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={userData.public_repos + userData.owned_private_repos} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Followers</p>
-            <CountUp end={999} duration={10} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={userData.followers} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
         </div>
         <div className="flex flex-row mt-5 gap-5">
