@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 import { GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '@utils/Firebase/firebase';
 
+import { signInWithGitHub } from '../../app/auth/GitHubAuth';
+
 import SrGee from "@assets/Logo/BW_nodescription.png"
 
 import { X } from "lucide-react";
@@ -17,17 +19,11 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
   const router = useRouter();
 
   const handleGitHubLogin = async () => {
-    const provider = new GithubAuthProvider();
-
     try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
+      const user = await signInWithGitHub();
       const token = await user.getIdToken();
 
       document.cookie = `authToken=${token}; path=/; secure;`;
-
-      console.log('Usuário logado:', user);
 
       router.push('/dashboard');
       setIsOpen(false);
