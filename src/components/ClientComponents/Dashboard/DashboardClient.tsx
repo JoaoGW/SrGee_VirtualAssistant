@@ -106,6 +106,44 @@ export function DashboardClient() {
   }, []);
 
   useEffect(() => {
+    if(user){
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      const getCurrentUser = () => {
+        try {
+          setIsLoading(true);
+
+          const currentUser = auth.currentUser;
+          if (currentUser) {
+            setUser(currentUser);
+          } else {
+            setErrorMsg('Ocorreu um problema ao obter informações do seu usuário');
+          }
+        } catch (error) {
+          if (error instanceof Error) {
+            setErrorMsg(error.message);
+          } else {
+            setErrorMsg(String(error));
+          }
+          setIsLoading(false);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      getCurrentUser();
+    }
+  }, []);
+
+  useEffect(() => {
     if (userStats && Object.keys(userStats).length > 0) {
       console.log("User stats stored:", userStats);
     }
