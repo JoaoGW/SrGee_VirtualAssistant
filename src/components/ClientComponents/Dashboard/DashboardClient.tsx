@@ -13,6 +13,7 @@ import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Crown, PenLine, CircleFadingArrowUp, RefreshCcw, FolderGit, GitPullRequest, Star, ArrowRight, CircleX } from 'lucide-react';
 
 import { auth } from '@utils/Firebase/firebase';
+import { fetchGitHubData } from '@utils/Scripts/gitRequests';
 
 import { PatternAuthPages } from '@components/PatternAuthPages/PatternAuthPages';
 import { OnlineBadge } from '@components/Badges/OnlineBadge';
@@ -27,6 +28,7 @@ Chart.register(ArcElement, Tooltip, Legend);
 
 export function DashboardClient() {
   const [user, setUser] = useState<any>(null);
+  const [userStats, setUserStats] = useState<any>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>('');
@@ -86,11 +88,33 @@ export function DashboardClient() {
   // For user data fetching
   useEffect(() => {
     fetchGitHubUser();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const stats = await fetchGitHubData();
+        setUserStats(stats);
+        console.log("User stats:", stats);
+      } catch (error) {
+        console.error("Erro ao buscar estatísticas do usuário:", error);
+        setErrorMsg("Erro ao buscar estatísticas do GitHub.");
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  useEffect(() => {
+    if (userStats && Object.keys(userStats).length > 0) {
+      console.log("User stats stored:", userStats);
+    }
+  }, [userStats]);
 
   // Fetching repositories data from GitHub API
   async function fetchGitHubUser() {
     try {
+      setIsLoadingData(true);
       const token = Cookies.get("githubToken");
 
       if (!token) {
@@ -114,6 +138,8 @@ export function DashboardClient() {
     } catch (error) {
       console.error("Error fetching your user data:", error);
       setErrorMsg("Error fetching informations from GitHub.");
+    } finally {
+      setIsLoadingData(false);
     }
   }
 
@@ -122,6 +148,15 @@ export function DashboardClient() {
       <section className="flex flex-col items-center justify-center h-screen">
         <RotateLoadingSpinner />
         <p className="mt-10">Estamos carregando suas informações...</p>
+      </section>
+    );
+  }
+
+  if (isLoadingData) {
+    return (
+      <section className="flex flex-col items-center justify-center h-screen">
+        <RotateLoadingSpinner />
+        <p className="mt-10">Carregando informações do seu usuário...</p>
       </section>
     );
   }
@@ -143,13 +178,19 @@ export function DashboardClient() {
               <h1 className="text-3xl font-bold">Welcome Back, {user?.displayName}</h1>
               <h2 className="text-xl">Account: {user?.email}</h2>
                 <h3 className="text-xl flex flex-row">
-                Developing from:{" "}
-                <span className="ml-2">
-                  { userData.location ? userData.location : "Localização não fornecida" }
-                </span>
+                  Developing from:{" "}
+                  <span className="ml-2">
+                    { userData?.location ? userData.location : "Localização não fornecida" }
+                  </span>
                 </h3>
               <h4 className="text-xl flex flex-row">
-                Current Plan: { userData.plan.name !== 'free' ? <Crown style={{ marginLeft: 15, marginRight: 7 }} /> : '' } <span className='uppercase ml-2'>{ userData.plan.name } </span>
+                Current Plan:{" "}
+                { userData?.plan?.name !== "free" ? (
+                  <Crown style={{ marginLeft: 15, marginRight: 7 }} />
+                ) : (
+                  ""
+                )}
+                <span className="uppercase ml-2">{ userData?.plan?.name || "N/A" }</span>
               </h4>
             </div>
           </div>
@@ -180,31 +221,31 @@ export function DashboardClient() {
         <div className="flex flex-row flex-wrap gap-3 mt-10 w-full justify-between">
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Total Commits</p>
-            <CountUp end={999} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={ userStats.totalCommits } duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Total Stars</p>
-            <CountUp end={999} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={ userStats.totalStars } duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Total Pull Requests</p>
-            <CountUp end={999} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={ userStats?.data?.viewer?.pullRequests.totalCount || 0 } duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Total Issues</p>
-            <CountUp end={999} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={ userStats?.data?.viewer?.issues.totalCount || 0 } duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
-            <p>Contributed to</p>
-            <CountUp end={999} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <p>Contributions</p>
+            <CountUp end={ userStats?.data?.viewer?.repositoriesContributedTo.totalCount || 0 } duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Repositories Owned</p>
-            <CountUp end={userData.public_repos + userData.owned_private_repos} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={ userData.public_repos + userData.owned_private_repos } duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
             <p>Followers</p>
-            <CountUp end={userData.followers} duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
+            <CountUp end={ userData?.followers } duration={6} style={{ fontWeight: 'bold', fontSize: '1.875rem', marginTop: 8 }} />
           </section>
         </div>
         <div className="flex flex-row mt-5 gap-5">
