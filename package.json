@@ -9,18 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^1.9.0",
     "dotenv": "^16.5.0",
     "firebase": "^11.7.1",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.509.0",
     "next": "15.3.1",
+    "octokit": "^5.0.2",
     "react": "^19.0.0",
+    "react-chartjs-2": "^5.3.0",
+    "react-countup": "^6.5.3",
     "react-dom": "^19.0.0",
     "react-simple-typewriter": "^5.0.1",
     "react-spinners": "^0.17.0",
+    "react-tooltip": "^5.28.1",
     "turbo": "^2.5.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
