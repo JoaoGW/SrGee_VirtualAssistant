@@ -390,7 +390,7 @@ export function DashboardClient() {
               </Link>
             </div>
             <div className="flex flex-col gap-1.5 mt-5">
-              { repositories.length === 0 ? (
+              { lastPullRequests.length === 0 ? (
                 <div className="flex flex-col justify-center items-center mt-20">
                   <CircleX color='white' size={40} />
                   <span className="text-white mt-2">Oh No! No recent Pull Requests were found</span>
