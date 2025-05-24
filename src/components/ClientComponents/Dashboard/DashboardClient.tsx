@@ -85,11 +85,17 @@ export function DashboardClient() {
     getCurrentUser();
   }, []);
 
+  // For user data fetching
+  useEffect(() => {
+    fetchGitHubUser();
+  }, []);
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
         const stats = await fetchGitHubData();
         setUserStats(stats);
+        console.log("User stats:", stats);
       } catch (error) {
         console.error("Erro ao buscar estatísticas do usuário:", error);
         setErrorMsg("Erro ao buscar estatísticas do GitHub.");
@@ -105,55 +111,37 @@ export function DashboardClient() {
     }
   }, [userStats]);
 
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    }
-  }, [user]);
-
   // Fetching repositories data from GitHub API
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+  async function fetchGitHubUser() {
+    try {
+      setIsLoadingData(true);
+      const token = Cookies.get("githubToken");
 
-    if (storedUser) {
-      // Se os dados do usuário já estão no localStorage, atualize o estado
-      setUserData(JSON.parse(storedUser));
-    } else {
-      // Caso contrário, busque os dados do usuário
-      const fetchGitHubUser = async () => {
-        try {
-          setIsLoadingData(true);
-          const token = Cookies.get("githubToken");
+      if (!token) {
+        setErrorMsg("Token not found. Please try logging in again.");
+        return;
+      }
 
-          if (!token) {
-            setErrorMsg("Token não encontrado. Faça login novamente.");
-            return;
-          }
+      const octokit = new Octokit({
+        auth: token,
+      });
 
-          const octokit = new Octokit({
-            auth: token,
-          });
+      const response = await octokit.request("GET /user", {
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      });
 
-          const response = await octokit.request("GET /user", {
-            headers: {
-              "X-GitHub-Api-Version": "2022-11-28",
-            },
-          });
+      setUserData(response.data);
+      console.log("User data:", response.data);
 
-          setUserData(response.data); // Atualiza o estado do usuário
-          localStorage.setItem("user", JSON.stringify(response.data)); // Salva no localStorage
-          console.log("User data:", response.data);
-        } catch (error) {
-          console.error("Erro ao buscar dados do usuário:", error);
-          setErrorMsg("Erro ao buscar informações do GitHub.");
-        } finally {
-          setIsLoadingData(false);
-        }
-      };
-
-      fetchGitHubUser();
+    } catch (error) {
+      console.error("Error fetching your user data:", error);
+      setErrorMsg("Error fetching informations from GitHub.");
+    } finally {
+      setIsLoadingData(false);
     }
-  }, []);
+  }
 
   if(isLoading){
     return (
