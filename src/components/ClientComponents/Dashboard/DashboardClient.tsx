@@ -34,6 +34,8 @@ export function DashboardClient() {
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [userData, setUserData] = useState<any>(null);
   const [repositories, setRepositories] = useState<any[]>([]);
+  const [lastPullRequests, setLastPullRequests] = useState<any[]>([]);
+  const [starredRepositories, setStarredRepositories] = useState<any[]>([]);
 
   // Chart.js v2 data
   const data = {
@@ -90,6 +92,7 @@ export function DashboardClient() {
     fetchGitHubUser();
   }, []);
 
+  // Continuation of the user data fetching
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -105,6 +108,7 @@ export function DashboardClient() {
     fetchStats();
   }, []);
 
+  // For storing user data in localStorage so the user persists in the app even if the page is refreshed
   useEffect(() => {
     if(user){
       localStorage.setItem('user', JSON.stringify(user));
@@ -143,9 +147,31 @@ export function DashboardClient() {
     }
   }, []);
 
+  // For informations about the current logged in user
   useEffect(() => {
     if (userStats && Object.keys(userStats).length > 0) {
       console.log("User stats stored:", userStats);
+    }
+  }, [userStats]);
+
+  // For fetching repositories data from GitHub API
+  useEffect(() => {
+    if(userStats?.data?.viewer?.repositories?.nodes){
+      setRepositories(userStats.data.viewer.repositories.nodes);
+    }
+  }, [userStats]);
+
+  // For fetching last pull requests data from GitHub API
+  useEffect(() => {
+    if(userStats?.latestPullRequests){
+      setLastPullRequests(userStats.latestPullRequests);
+    }
+  }, [userStats]);
+
+  // For fetching stared repositories data from GitHub API
+  useEffect(() => {
+    if(userStats?.starredRepositories){
+      setStarredRepositories(userStats.starredRepositories);
     }
   }, [userStats]);
 
@@ -171,8 +197,6 @@ export function DashboardClient() {
       });
 
       setUserData(response.data);
-      console.log("User data:", response.data);
-
     } catch (error) {
       console.error("Error fetching your user data:", error);
       setErrorMsg("Error fetching informations from GitHub.");
@@ -181,6 +205,7 @@ export function DashboardClient() {
     }
   }
 
+  // In case page is loading
   if(isLoading){
     return (
       <section className="flex flex-col items-center justify-center h-screen">
@@ -190,6 +215,7 @@ export function DashboardClient() {
     );
   }
 
+  // In case page is loading the current logged in user data
   if (isLoadingData) {
     return (
       <section className="flex flex-col items-center justify-center h-screen">
@@ -312,8 +338,8 @@ export function DashboardClient() {
                   <span className="text-white mt-2">Oh No! No repositories were found</span>
                 </div>
               ) : (
-                repositories.map((repositoriesData) => (
-                  <ActivityCard key={repositoriesData.id} icon={FolderGit} description={repositoriesData.name} />
+                [...repositories].reverse().slice(0, 6).map((repositoriesData) => (
+                  <ActivityCard key={repositoriesData.id ?? `${repositoriesData.name}`} icon={FolderGit} description={repositoriesData.name} />
                 ))
               )}
             </div>
@@ -364,12 +390,16 @@ export function DashboardClient() {
               </Link>
             </div>
             <div className="flex flex-col gap-1.5 mt-5">
-              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
-              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
-              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
-              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
-              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
-              <ActivityCard icon={GitPullRequest} description="Pull Request test" />
+              { repositories.length === 0 ? (
+                <div className="flex flex-col justify-center items-center mt-20">
+                  <CircleX color='white' size={40} />
+                  <span className="text-white mt-2">Oh No! No recent Pull Requests were found</span>
+                </div>
+              ) : (
+                [...lastPullRequests].slice(0, 6).map((latestPullRequests) => (
+                  <ActivityCard key={ latestPullRequests.id ?? latestPullRequests.title } icon={ GitPullRequest } description={ latestPullRequests.title } />
+                ))
+              )}
             </div>
           </section>
           <section className="w-[25%] bg-gray-600 p-5 rounded-lg">
@@ -391,12 +421,16 @@ export function DashboardClient() {
               </Link>
             </div>
             <div className="flex flex-col gap-1.5 mt-5">
-              <ActivityCard icon={Star} description="Stared Repository test" />
-              <ActivityCard icon={Star} description="Stared Repository test" />
-              <ActivityCard icon={Star} description="Stared Repository test" />
-              <ActivityCard icon={Star} description="Stared Repository test" />
-              <ActivityCard icon={Star} description="Stared Repository test" />
-              <ActivityCard icon={Star} description="Stared Repository test" />
+              { repositories.length === 0 ? (
+                <div className="flex flex-col justify-center items-center mt-20">
+                  <CircleX color='white' size={40} />
+                  <span className="text-white mt-2">Oh No! No repositories were found</span>
+                </div>
+              ) : (
+                [...starredRepositories].slice(0, 6).map((starredRepositories) => (
+                  <ActivityCard key={ starredRepositories.id ?? starredRepositories.name } icon={Star} description={ starredRepositories.name } />
+                ))
+              )}
             </div>
           </section>
         </div>
