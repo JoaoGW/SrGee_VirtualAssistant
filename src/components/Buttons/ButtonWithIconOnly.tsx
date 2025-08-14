@@ -7,13 +7,14 @@ import { LucideIcon } from "lucide-react";
 type ButtonProps = {
   icon: LucideIcon,
   iconColor?: string,
+  iconSize?: number,
   description: string,
   style?: Object,
   disabled?: boolean,
   buttonAction: () => void
 }
 
-export function ButtonWithIconOnly({ icon: Icon, iconColor, description, disabled, style, buttonAction }: ButtonProps) {
+export function ButtonWithIconOnly({ icon: Icon, iconColor, iconSize, description, disabled, style, buttonAction }: ButtonProps) {
   return (
     <>
       <button
@@ -25,7 +26,7 @@ export function ButtonWithIconOnly({ icon: Icon, iconColor, description, disable
         onClick={ buttonAction }
         disabled={ disabled }
       >
-        <Icon color={ iconColor } size={40} />
+        <Icon color={ iconColor } size={ iconSize || 40 } />
       </button>
 
       <Tooltip id="buttonIcon-tooltip" />

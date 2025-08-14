@@ -1,5 +1,5 @@
 import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../../utils/Firebase/firebase";
+import { auth } from "../../services/Firebase/firebase";
 
 import Cookies from "js-cookie";
 
