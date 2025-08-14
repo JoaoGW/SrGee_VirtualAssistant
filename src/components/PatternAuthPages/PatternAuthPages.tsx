@@ -8,8 +8,8 @@ type PatternAuthPagesProps = React.PropsWithChildren<{
 export function PatternAuthPages({ children, isLoading }: PatternAuthPagesProps): JSX.Element {
   return (
     <>
-      <div className="ml-45 mr-20 py-15">
-        {children}
+      <div className="ml-55 mr-5 py-15">
+        { children }
       </div>
       <SideBar isLoading={ isLoading }/>
     </>

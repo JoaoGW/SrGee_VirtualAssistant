@@ -232,7 +232,7 @@ export function DashboardClient() {
           <div className="flex flex-row">
             <Image
               className="rounded-full border-2 border-white"
-              src={user?.photoURL || DefaultProfile}
+              src={ user?.photoURL || DefaultProfile }
               alt="User GitHub Avatar"
               width={175}
               height={175}
