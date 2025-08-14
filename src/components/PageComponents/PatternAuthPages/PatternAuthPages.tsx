@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import { SideBar } from "@components/SideBar/SideBar";
+import { SideBar } from "@components/PageComponents/SideBar/SideBar";
 
 type PatternAuthPagesProps = React.PropsWithChildren<{
   isLoading: boolean,

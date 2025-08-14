@@ -15,7 +15,7 @@ import { Crown, PenLine, CircleFadingArrowUp, RefreshCcw, FolderGit, GitPullRequ
 import { auth } from '../../../services/Firebase/firebase';
 import { fetchGitHubData } from '@utils/gitRequests';
 
-import { PatternAuthPages } from '@components/PatternAuthPages/PatternAuthPages';
+import { PatternAuthPages } from '@components/PageComponents/PatternAuthPages/PatternAuthPages';
 import { OnlineBadge } from '@components/Badges/OnlineBadge';
 import { RotateLoadingSpinner } from '@components/LoadingSpinners/Loading';
 import { ButtonWithStartIcon } from '@components/Buttons/ButtonWithStartIcon';

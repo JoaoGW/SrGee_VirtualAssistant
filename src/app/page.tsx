@@ -3,8 +3,8 @@ import Image from "next/image";
 
 import { Typewriter } from 'react-simple-typewriter';
 
-import { Header } from "@components/Header/Header";
-import { Footer } from "@components/Footer/Footer";
+import { Header } from "@components/PageComponents/Header/Header";
+import { Footer } from "@components/PageComponents/Footer/Footer";
 import { ButtonWithEndIcon } from "@components/Buttons/ButtonWithEndIcon";
 
 import GitHubLogo from '@assets/GitHub/github-logo-unofficial.png'
