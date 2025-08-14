@@ -1,8 +1,6 @@
 import { JSX } from "react";
 import { SideBar } from "@components/PageComponents/SideBar/SideBar";
 
-type PatternAuthPagesProps = React.PropsWithChildren<{
-  isLoading: boolean,
 interface User {
   id: string;
   name: string;
