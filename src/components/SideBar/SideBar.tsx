@@ -21,9 +21,9 @@ type SideBarDependencies = {
 
 export function SideBar({ isLoading, user }: SideBarDependencies) {  
   return(
-    <div className="absolute top-0 bottom-0 left-0 w-[10.5%] bg-[#252525] flex flex-col justify-between">
+    <div className="absolute top-0 bottom-0 left-0 w-[10.5%] bg-[#0c1117] flex flex-col justify-between">
       <div className="flex flex-col items-center border-b-2">
-        <Image src={ WBLogo } alt="" style={{ marginBottom: 20 }}></Image>
+        <Image src={ WBLogo } alt="" style={{ marginBottom: 20 }} />
         <div className="flex flex-row border rounded-md p-2 items-center max-w-[95%] mt-[-45] mb-5">
           <div className="border rounded-full p-2 mr-2">
             <Github size={23} />

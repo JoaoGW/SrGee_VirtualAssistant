@@ -18,7 +18,7 @@ export function ButtonWithIconOnly({ icon: Icon, iconColor, iconSize, descriptio
   return (
     <>
       <button
-        className="flex items-center justify-center w-14 h-14 hover:cursor-pointer hover:bg-[#4b4b4b] hover:rounded-full hover:p-3 duration-200"
+        className="flex items-center justify-center w-14 h-14 hover:cursor-pointer"
         data-tooltip-id="buttonIcon-tooltip"
         data-tooltip-content={ description }
         data-tooltip-place="right"
