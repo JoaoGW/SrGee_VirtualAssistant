@@ -15,8 +15,6 @@ import DefaultProfile from '@assets/Logo/WB_description.png';
 
 import { signOut } from "firebase/auth";
 
-type SideBarDependencies = {
-  isLoading: boolean,
 interface User {
   photoURL?: string;
   displayName?: string;
