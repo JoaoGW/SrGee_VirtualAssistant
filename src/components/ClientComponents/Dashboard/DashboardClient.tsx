@@ -12,10 +12,10 @@ import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
 import { Crown, PenLine, CircleFadingArrowUp, RefreshCcw, FolderGit, GitPullRequest, Star, ArrowRight, CircleX } from 'lucide-react';
 
-import { auth } from '@utils/Firebase/firebase';
-import { fetchGitHubData } from '@utils/Scripts/gitRequests';
+import { auth } from '../../../services/Firebase/firebase';
+import { fetchGitHubData } from '@utils/gitRequests';
 
-import { PatternAuthPages } from '@components/PatternAuthPages/PatternAuthPages';
+import { PatternAuthPages } from '@components/PageComponents/PatternAuthPages/PatternAuthPages';
 import { OnlineBadge } from '@components/Badges/OnlineBadge';
 import { RotateLoadingSpinner } from '@components/LoadingSpinners/Loading';
 import { ButtonWithStartIcon } from '@components/Buttons/ButtonWithStartIcon';
@@ -227,20 +227,20 @@ export function DashboardClient() {
 
   if (user) {
     return (
-      <PatternAuthPages isLoading={isLoading}>
+      <PatternAuthPages isLoading={ isLoading } user={ user }>
         <div className="flex flex-row justify-between items-start w-full">
           <div className="flex flex-row">
             <Image
               className="rounded-full border-2 border-white"
-              src={user?.photoURL || DefaultProfile}
+              src={ user?.photoURL || DefaultProfile }
               alt="User GitHub Avatar"
               width={175}
               height={175}
             />
             <div className="ml-5">
               <OnlineBadge />
-              <h1 className="text-3xl font-bold">Welcome Back, {user?.displayName}</h1>
-              <h2 className="text-xl">Account: {user?.email}</h2>
+              <h1 className="text-3xl font-bold">Welcome Back, { user?.displayName }</h1>
+              <h2 className="text-xl">Account: { user?.email }</h2>
                 <h3 className="text-xl flex flex-row">
                   Developing from:{" "}
                   <span className="ml-2">

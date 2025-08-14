@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { GithubAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '@utils/Firebase/firebase';
+import { auth } from '../../services/Firebase/firebase';
 
 import { signInWithGitHub } from '../../app/auth/GitHubAuth';
 
