@@ -17,7 +17,15 @@ import { signOut } from "firebase/auth";
 
 type SideBarDependencies = {
   isLoading: boolean,
-  user: any
+interface User {
+  photoURL?: string;
+  displayName?: string;
+  email?: string;
+}
+
+type SideBarDependencies = {
+  isLoading: boolean,
+  user: User
 }
 
 export function SideBar({ isLoading, user }: SideBarDependencies) {  
