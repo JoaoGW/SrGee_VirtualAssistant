@@ -3,7 +3,15 @@ import { SideBar } from "@components/PageComponents/SideBar/SideBar";
 
 type PatternAuthPagesProps = React.PropsWithChildren<{
   isLoading: boolean,
-  user: any
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+type PatternAuthPagesProps = React.PropsWithChildren<{
+  isLoading: boolean,
+  user: User
 }>;
 
 export function PatternAuthPages({ children, isLoading, user }: PatternAuthPagesProps): JSX.Element {
