@@ -21,7 +21,7 @@ export function SliderFilter({ isLoading, user, setUser }: SliderFilterProps) {
   }, [user?.dataRange]);
 
   return (
-    <div className="flex items-center gap-4 mt-8">
+    <div className="flex items-center gap-4">
       <span className="font-medium">Show data from:</span>
       <div className="relative inline-flex items-center w-36 h-10 bg-gray-800 rounded-xl shadow overflow-hidden">
         <div className="absolute inset-0 flex">

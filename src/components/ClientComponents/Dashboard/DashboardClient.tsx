@@ -10,7 +10,7 @@ import CountUp from 'react-countup';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
-import { Crown, PenLine, CircleFadingArrowUp, RefreshCcw, FolderGit, GitPullRequest, Star, ArrowRight, CircleX } from 'lucide-react';
+import { Crown, PenLine, CircleFadingArrowUp, RefreshCcw, FolderGit, GitPullRequest, Star, ArrowRight, CircleX, Palette } from 'lucide-react';
 
 import { auth } from '../../../services/Firebase/firebase';
 import { fetchGitHubData } from '@utils/gitRequests';
@@ -23,6 +23,7 @@ import { SliderFilter } from '@components/SliderFilter/SliderFilter';
 import { ActivityCard } from '@components/ActivityCard/ActivityCard';
 
 import DefaultProfile from '@assets/Logo/WB_description.png';
+import { Glow, GlowCapture } from '@codaworks/react-glow';
 
 Chart.register(ArcElement, Tooltip, Legend);
 
@@ -228,7 +229,7 @@ export function DashboardClient() {
   if (user) {
     return (
       <PatternAuthPages isLoading={ isLoading } user={ user }>
-        <div className="flex flex-row justify-between items-start w-full">
+        <div className="flex flex-row justify-between items-start w-full mb-10">
           <div className="flex flex-row">
             <Image
               className="rounded-full border-2 border-white"
@@ -258,7 +259,7 @@ export function DashboardClient() {
               </h4>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center gap-3">
+          <div className="flex flex-col items-center justify-center gap-3 w-1/5">
             <ButtonWithStartIcon
               icon={PenLine}
               text="Edit Profile"
@@ -277,10 +278,18 @@ export function DashboardClient() {
               isLogin={false}
               style={{ width: '100%', backgroundColor: '#10b981', color: '#fff' }}
             />
-            <div className="mt-5">
-              <SliderFilter isLoading={isLoading} user={user} setUser={setUser} />
-            </div>
           </div>
+        </div>
+        <div className="flex flex-row justify-between w-full mt-8 mb-[-10] items-center">
+          <GlowCapture>
+            <Glow color='blue'>
+                <button className='flex flex-row gap-2 items-center px-4 py-2 rounded-lg bg-transparent border border-gray-500/50 backdrop-blur-md shadow-lg hover:shadow-xl transition-all duration-300 glow:text-blue-400 glow:bg-blue-500/10 glow:border-blue-400 hover:cursor-pointer'>
+                <Palette size={18} />
+                Personalizar Dashboard
+                </button>
+            </Glow>
+          </GlowCapture>
+          <SliderFilter isLoading={isLoading} user={user} setUser={setUser} />
         </div>
         <div className="flex flex-row flex-wrap gap-3 mt-10 w-full justify-between">
           <section className="flex-1 min-w-[170px] max-w-[220px] flex flex-col items-center bg-gray-600 p-5 rounded-lg">
