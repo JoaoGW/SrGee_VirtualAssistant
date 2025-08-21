@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { redirect, useRouter, usePathname } from "next/navigation";
 
 import { auth } from '../../../services/Firebase/firebase';
 
@@ -26,7 +26,13 @@ type SideBarDependencies = {
   user: User
 }
 
-export function SideBar({ isLoading, user }: SideBarDependencies) {  
+export function SideBar({ isLoading, user }: SideBarDependencies) {
+  const pathname = usePathname();
+
+  function checkCurrentUrl(paramName: string) {
+    return pathname.includes(paramName);
+  }
+
   return(
     <div className="absolute top-0 bottom-0 left-0 w-[10.5%] bg-[#0c1117] flex flex-col justify-between">
       <div className="flex flex-col items-center border-b-2">
@@ -41,20 +47,20 @@ export function SideBar({ isLoading, user }: SideBarDependencies) {
       </div>
 
       <div className="flex flex-col justify-start flex-grow mt-5 ml-3">
-        <ButtonNavRouteStyle icon={ House } title="Home" />
-        <ButtonNavRouteStyle icon={ GitCommitVertical } title="Commits" />
-        <ButtonNavRouteStyle icon={ GitBranch } title="Branches" />
-        <ButtonNavRouteStyle icon={ GitPullRequestArrow } title="Pull Requests" />
-        <ButtonNavRouteStyle icon={ BadgeAlert } title="Issues" />
-        <ButtonNavRouteStyle icon={ Workflow } title="Automations" />
-        <ButtonNavRouteStyle icon={ FolderCog } title="Project Settings" />
-        <ButtonNavRouteStyle icon={ MessageSquareDiff } title="Diffs & Logs" />
+        <ButtonNavRouteStyle icon={ House } title="Home" urlParam={ checkCurrentUrl("dashboard") } navigateTo="dashboard" />
+        <ButtonNavRouteStyle icon={ GitCommitVertical } title="Commits" urlParam={ checkCurrentUrl("commits") } navigateTo="commits" />
+        <ButtonNavRouteStyle icon={ GitBranch } title="Branches" urlParam={ checkCurrentUrl("branches") } navigateTo="branches" />
+        <ButtonNavRouteStyle icon={ GitPullRequestArrow } title="Pull Requests" urlParam={ checkCurrentUrl("prs") } navigateTo="prs" />
+        <ButtonNavRouteStyle icon={ BadgeAlert } title="Issues" urlParam={ checkCurrentUrl("issues") } navigateTo="issues" />
+        <ButtonNavRouteStyle icon={ Workflow } title="Automations" urlParam={ checkCurrentUrl("automation") } navigateTo="automation" />
+        <ButtonNavRouteStyle icon={ FolderCog } title="Project Settings" urlParam={ checkCurrentUrl("projectsettings") } navigateTo="projectsettings" />
+        <ButtonNavRouteStyle icon={ MessageSquareDiff } title="Diffs & Logs" urlParam={ checkCurrentUrl("diffs") } navigateTo="diffs" />
       </div>
       <div className="flex flex-col justify-end mt-5 ml-3">
         <PremiumUpgradeMini />
-        <ButtonNavRouteStyle icon={ Settings } title="Settings" />
-        <ButtonNavRouteStyle icon={ ShieldQuestion } title="About" />
-        <ButtonNavRouteStyle icon={ MessageSquareQuote } title="Feedback" />
+        <ButtonNavRouteStyle icon={ Settings } title="Settings" urlParam={ checkCurrentUrl("settings") } navigateTo="settings" />
+        <ButtonNavRouteStyle icon={ ShieldQuestion } title="About" urlParam={ checkCurrentUrl("about") } navigateTo="about" />
+        <ButtonNavRouteStyle icon={ MessageSquareQuote } title="Feedback" urlParam={ checkCurrentUrl("feedback") } navigateTo="feedback" />
       </div>
 
       <div className="border-b-2 my-3"></div>
