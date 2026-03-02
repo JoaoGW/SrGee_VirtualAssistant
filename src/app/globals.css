@@ -4,7 +4,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --font-specials-titles: "Playwrite DK Loopet", serif; /* Atualizado */
+  --font-specials-titles: "Playwrite DK Loopet", serif;
   --font-poppins: "Poppins", sans-serif;
   --font-kanit: "Kanit", sans-serif;
 }
@@ -18,7 +18,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #06070b;
     --foreground: #ededed;
   }
 }

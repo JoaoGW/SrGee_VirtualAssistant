@@ -3,8 +3,8 @@ import Image from "next/image";
 
 import { Typewriter } from 'react-simple-typewriter';
 
-import { Header } from "@components/Header/Header";
-import { Footer } from "@components/Footer/Footer";
+import { Header } from "@components/PageComponents/Header/Header";
+import { Footer } from "@components/PageComponents/Footer/Footer";
 import { ButtonWithEndIcon } from "@components/Buttons/ButtonWithEndIcon";
 
 import GitHubLogo from '@assets/GitHub/github-logo-unofficial.png'
@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="h-screen w-screen relative">
       <Image
-        src={GitHubLogo}
+        src={ GitHubLogo }
         alt=""
         className="absolute top-0 right-0 h-screen w-[41.5vw] object-cover opacity-20 z-0 pt-10"
         style={{

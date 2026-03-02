@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sr Gee - AI Virtual Assistant
 
-## Getting Started
+Assistente virtual usando OpenAI e ChatGPT para gerenciar e avaliar suas habilidades de programação.
 
-First, run the development server:
+![Status](https://img.shields.io/badge/status-Em%20Desenvolvimento-yellow)
+![Next.js](https://img.shields.io/badge/Next.js-Framework-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-Language-blue)
+![OpenAI](https://img.shields.io/badge/OpenAI-AI-412991)
 
-```bash
+---
+
+## Descrição
+
+O **Sr Gee Virtual Assistant** é uma aplicação web que integra a API da OpenAI para criação de um assistente virtual capaz de processar linguagem natural e gerar respostas dinâmicas.
+
+O projeto está sendo estruturado com foco em:
+
+- Arquitetura organizada
+- Separação clara de responsabilidades
+- Integração segura com APIs externas
+- Escalabilidade futura
+
+A aplicação roda atualmente apenas em ambiente local.
+
+---
+
+## Tecnologias Utilizadas
+
+- Next.js  
+- TypeScript  
+- JavaScript  
+- OpenAI API  
+
+---
+
+## Principais Funcionalidades
+
+- Integração com modelos da OpenAI  
+- Comunicação assíncrona com API externa  
+- Estrutura modular para expansão futura  
+- Interface web para interação com o assistente  
+- Organização de código voltada para boas práticas  
+
+---
+
+## Demonstrações
+
+Por enquanto eu não fiz as capturas de tela. Isto mudará em breve!
+
+---
+
+## Estrutura do Projeto
+
+├── app/  
+├── components/  
+├── services/  
+├── public/  
+├── package.json  
+
+---
+
+## Instalação
+
+### 1. Clonar o repositório
+
+No bash:
+
+git clone https://github.com/JoaoGW/SrGee_VirtualAssistant.git
+
+### 2. Acessar o diretório
+
+No bash:
+
+cd SrGee_VirtualAssistant
+
+### 3. Instalar dependências
+
+No bash:
+
+npm install
+
+### 4. Configurar variáveis de ambiente
+
+Crie um arquivo `.env.local` e adicione sua chave da OpenAI:
+
+OPENAI_API_KEY=sua_chave_aqui
+
+### 5. Executar em ambiente de desenvolvimento
+
+No bash:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicação estará disponível em:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Testes
 
-To learn more about Next.js, take a look at the following resources:
+Atualmente o projeto não possui testes automatizados implementados.  
+Futuramente serão adicionados:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Testes unitários  
+- Testes de integração com mock da API  
+- Testes E2E  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<p align="center">Feito com ❤️ por João Pedro</p>

@@ -7,17 +7,18 @@ import { LucideIcon } from "lucide-react";
 type ButtonProps = {
   icon: LucideIcon,
   iconColor?: string,
+  iconSize?: number,
   description: string,
   style?: Object,
   disabled?: boolean,
   buttonAction: () => void
 }
 
-export function ButtonWithIconOnly({ icon: Icon, iconColor, description, disabled, style, buttonAction }: ButtonProps) {
+export function ButtonWithIconOnly({ icon: Icon, iconColor, iconSize, description, disabled, style, buttonAction }: ButtonProps) {
   return (
     <>
       <button
-        className="flex items-center justify-center w-14 h-14 hover:cursor-pointer hover:bg-[#4b4b4b] hover:rounded-full hover:p-3 duration-200"
+        className="flex items-center justify-center w-14 h-14 hover:cursor-pointer"
         data-tooltip-id="buttonIcon-tooltip"
         data-tooltip-content={ description }
         data-tooltip-place="right"
@@ -25,7 +26,7 @@ export function ButtonWithIconOnly({ icon: Icon, iconColor, description, disable
         onClick={ buttonAction }
         disabled={ disabled }
       >
-        <Icon color={ iconColor } size={40} />
+        <Icon color={ iconColor } size={ iconSize || 40 } />
       </button>
 
       <Tooltip id="buttonIcon-tooltip" />
